@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { Button, Form, Col } from 'react-bootstrap'
-import Image from 'react-bootstrap/Image'
 import { useDispatch, useSelector } from 'react-redux'
 import PaypalImg from '../assets/Paypal.jpg'
 import StripeImg from '../assets/stripe.png'

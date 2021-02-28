@@ -77,7 +77,7 @@ const CartScreen = ({ match, location, history }) => {
                       onClick={() => removeFromCartHandler(item.product)}
                     >
                       {' '}
-                      <i className='fas fa-trash'></i>{' '}
+                      <i className='fas fa-trash-alt'></i>{' '}
                     </Button>
                   </Col>
                 </Row>
