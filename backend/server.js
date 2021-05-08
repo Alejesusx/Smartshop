@@ -23,6 +23,10 @@ app.use('/API/products', ProductRoutes)
 app.use('/API/users', userRoutes)
 app.use('/API/orders', orderRoutes)
 
+app.get('/API/config/paypal', (req, res) =>
+  res.send(process.env.PAYPAL_CLIENT_ID)
+)
+
 app.use(UrlNotFound)
 
 app.use(errorHandler)
