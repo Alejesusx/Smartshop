@@ -6,7 +6,11 @@ import PaypalImg from '../assets/Paypal.jpg'
 import StripeImg from '../assets/stripe.png'
 import GPayImg from '../assets/Google-Pay-logo.jpg'
 import ApplePayImg from '../assets/ApAy.png'
-import { getOrderDetails, payOrder } from '../actions/orderActions'
+import {
+  getOrderDetails,
+  payOrder,
+  deliverOrder,
+} from '../actions/orderActions'
 import {emptyCart} from '../actions/cartActions'
 import {
   Col,
@@ -14,14 +18,17 @@ import {
   ListGroup,
   Image,
   ListGroupItem,
-  Card,
+  Card, Button
 } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
-import {  ORDER_PAY_RESET  } from '../constants/orderConstants'
+import {
+  ORDER_PAY_RESET,
+  ORDER_DELIVER_RESET,
+} from '../constants/orderConstants'
 
-const OrderScreen = ({ match }) => {
+const OrderScreen = ({ match, history }) => {
   const orderID = match.params.id
 
   const [sdkReady, setSdkReady] = useState(false)
@@ -31,8 +38,14 @@ const OrderScreen = ({ match }) => {
   const orderDetails = useSelector((state) => state.orderDetails)
   const { order, loading, error } = orderDetails
 
+  const userLogin = useSelector((state) => state.userLogin)
+  const { userInfo } = userLogin
+
   const orderPay = useSelector((state) => state.orderPay)
   const { loading: loadingPay, success: successPay } = orderPay
+
+  const orderDeliver = useSelector((state) => state.orderDeliver)
+  const { loading: loadingDeliver, success: successDeliver } = orderDeliver
 
   var paymentlogo = ''
   if (!loading) {
@@ -56,6 +69,11 @@ const OrderScreen = ({ match }) => {
   }
 
   useEffect(() => {
+
+    if(!userInfo){
+      history.push('/login')
+    }
+
     const addPaypalScript = async () => {
       const { data: clientID } = await axios.get('/API/config/paypal')
       const script = document.createElement('script')
@@ -68,8 +86,9 @@ const OrderScreen = ({ match }) => {
       document.body.appendChild(script)
     }
 
-    if (!order || successPay) {
-      dispatch({   type: ORDER_PAY_RESET   })
+    if (!order || successPay || successDeliver) {
+      dispatch({ type: ORDER_PAY_RESET })
+      dispatch({ type: ORDER_DELIVER_RESET })
       dispatch(getOrderDetails(orderID))
     } else if (!order.isPaid) {
       if (!window.paypal) {
@@ -78,11 +97,15 @@ const OrderScreen = ({ match }) => {
         setSdkReady(true)
       }
     }
-  }, [dispatch, orderID, order, successPay])
+  }, [dispatch, orderID, order, successPay, successDeliver])
 
   const successPaymentHandler = (paymentResult) => {
     dispatch(payOrder(orderID, paymentResult))
     dispatch(emptyCart(orderID))
+  }
+
+  const deliverHandler = () => {
+    dispatch(deliverOrder(order))
   }
 
   return loading ? (
@@ -113,8 +136,7 @@ const OrderScreen = ({ match }) => {
               </p>
               {order.isDelivered ? (
                 <Message variant='success'>
-                  {' '}
-                  Delivered at {order.updatedAt}
+                  Out for delivery since {order.deliveredAt.substring(0,10)} at {order.deliveredAt.substring(11, 16)}
                 </Message>
               ) : (
                 <Message variant='danger'> Not deliveded</Message>
@@ -124,7 +146,6 @@ const OrderScreen = ({ match }) => {
               <h3>Payment Method </h3>
               <p>
                 <strong className='mr-1'>Method: </strong>
-                {'   '}
                 <img
                   className='img-rounded ml-3'
                   src={paymentlogo}
@@ -133,7 +154,7 @@ const OrderScreen = ({ match }) => {
                 />
               </p>
               {order.isPaid ? (
-                <Message variant='success'> Paid on {order.updatedAt}</Message>
+                <Message variant='success'> Paid on {order.paidAt.substring(0,10)} at {order.paidAt.substring(11, 16)}</Message>
               ) : (
                 <Message variant='danger'> Not Paid</Message>
               )}
@@ -213,7 +234,7 @@ const OrderScreen = ({ match }) => {
                   </Col>
                 </Row>
               </ListGroupItem>
-              {!order.isPaid && (
+              { (userInfo && !order.isPaid)  && (
                 <ListGroupItem>
                   {loadingPay && <Loader />}
                   {!sdkReady ? (
@@ -226,6 +247,15 @@ const OrderScreen = ({ match }) => {
                   )}
                 </ListGroupItem>
               )}
+              {
+                loadingDeliver && <Loader/>
+              }
+              {(userInfo && userInfo.isAdmin && order.isPaid && !order.isDelivered) && (
+                <ListGroupItem>
+                  <Button type='button' className='btn btn-block btn-success' onClick={deliverHandler}> Mark as sent for deliver</Button>
+                </ListGroupItem>
+              )}
+
             </ListGroup>
           </Card>
         </Col>

@@ -9,10 +9,10 @@ const Loader = () => {
         role='status'
         variant='light'
         style={{
-          width: "140px",
-          height: "140px",
-          margin: "auto",
-          display: "block",
+          width: '80px',
+          height: '80px',
+          margin: 'auto',
+          display: 'block',
         }}
       >
         <span className='sr-only primary'> Loading...</span>

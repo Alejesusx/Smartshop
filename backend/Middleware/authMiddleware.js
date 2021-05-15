@@ -23,4 +23,13 @@ const protect = asyncHandler(async (req, res, next) => {
     throw new Error('Not authorized, no Bearer')
   }
 })
-export { protect }
+
+const admin = (req, res, next) => {
+  if (req.user && req.user.isAdmin) {
+    next()
+  } else {
+    res.status(401)
+    throw new Error('User not authorized as an admin')
+  }
+}
+export { protect, admin }

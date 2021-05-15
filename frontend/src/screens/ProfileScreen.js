@@ -36,7 +36,6 @@ const ProfileScreen = ({ location, history }) => {
         dispatch(getUserDetails('profile'))
         dispatch(userListOrdersAction())
       } else {
-        console.log(user.name)
         setName(user.name)
         setEmail(user.email)
       }
@@ -66,7 +65,6 @@ const ProfileScreen = ({ location, history }) => {
         {error && <Message variant='danger'> {error}</Message>}
         {success && (
           <Message variant='success'>
-            {' '}
             Your info has been updated succesfully
           </Message>
         )}
@@ -131,7 +129,7 @@ const ProfileScreen = ({ location, history }) => {
                 <th>DATE</th>
                 <th>TOTAL</th>
                 <th>PAID</th>
-                <th>DELIVERED</th>
+                <th>OUT FOR DELIVERY</th>
                 <th></th>
               </tr>
             </thead>
