@@ -6,6 +6,7 @@ import { getUserDetails, updateUserProfile } from '../actions/userActions'
 import { userListOrdersAction } from '../actions/orderActions'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
+import Title from '../components/Title'
 
 const ProfileScreen = ({ location, history }) => {
   const [name, setName] = useState('')
@@ -59,6 +60,7 @@ const ProfileScreen = ({ location, history }) => {
 
   return (
     <Row>
+      <Title title={`${name} | Profile`} />
       <Col md={4}>
         <h4>User Profile</h4>
         {message && <Message variant='info'> {message}</Message>}
@@ -116,16 +118,16 @@ const ProfileScreen = ({ location, history }) => {
         </Form>
       </Col>
       <Col md={8}>
-        <h2>List of orders</h2>
+          <h4 className='text-primary mt-2'> List of Orders</h4>
         {loadingOrders ? (
           <Loader />
         ) : errorOrders ? (
           <Message variant='danger'> {errorOrders} </Message>
-        ) : (
+        ) : orders.length===0 ? (<Message variant='info'> You don't have any orders yet... </Message>) : (
           <Table hover responsive bordered>
             <thead>
               <tr className='table-primary '>
-                <th>ID</th>
+                <th>CODE</th>
                 <th>DATE</th>
                 <th>TOTAL</th>
                 <th>PAID</th>
@@ -138,7 +140,10 @@ const ProfileScreen = ({ location, history }) => {
                 <tr key={order._id}>
                   <td>{order._id}</td>
                   <td>{order.createdAt.substring(0, 10)}</td>
-                  <td>{order.totalPrice}</td>
+                  <td>
+                    {' '}
+                    <span className='text-success'>$ {order.totalPrice} </span>
+                  </td>
                   <td>
                     {order.isPaid ? (
                       order.paidAt.substring(0, 10)

@@ -6,6 +6,7 @@ import { register } from '../actions/userActions'
 import FormContainer from '../components/FormContainer'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
+import Title from '../components/Title'
 
 const RegisterScreen = ({ location, history }) => {
   const [email, setEmail] = useState('')
@@ -40,6 +41,7 @@ const RegisterScreen = ({ location, history }) => {
 
   return (
     <FormContainer>
+      <Title title='SignUp | SmartShop' />
       <h4>Sign Up</h4>
       {message && <Message variant='info'> {message}</Message>}
       {error && <Message variant='danger'> {error}</Message>}

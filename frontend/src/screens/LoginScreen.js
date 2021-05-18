@@ -6,6 +6,7 @@ import { login } from '../actions/userActions'
 import FormContainer from '../components/FormContainer'
 import Loader from '../components/Loader'
 import Message from '../components/Message'
+import Title from '../components/Title'
 
 const LoginScreen = ({ location, history }) => {
   const [email, setEmail] = useState('')
@@ -32,6 +33,7 @@ const LoginScreen = ({ location, history }) => {
 
   return (
     <FormContainer>
+      <Title title='Login | SmartShop' />
       <h4>Sign In</h4>
       {error && <Message variant='danger'> {error}</Message>}
       {loading && <Loader />}

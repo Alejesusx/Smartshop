@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Row, Col, Image, ListGroup, Card, Button, Form } from 'react-bootstrap'
 import Message from '../components/Message'
 import { addToCart, removeFromCart } from '../actions/cartActions'
+import Title from '../components/Title'
 
 const CartScreen = ({ match, location, history }) => {
   const productId = match.params.id
@@ -31,6 +32,7 @@ const CartScreen = ({ match, location, history }) => {
 
   return (
     <Row>
+      <Title title='Cart | SmartShop' />
       <Col md={8}>
         <h3>Shopping Cart</h3>
         {cartItems.length === 0 ? (

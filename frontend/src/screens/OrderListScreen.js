@@ -34,7 +34,7 @@ const OrderListScreen = ({ history }) => {
         <Table striped bordered hover responsive className='table-sm'>
           <thead>
             <tr className='primary'>
-              <th>ID</th>
+              <th>CODE</th>
               <th>USER</th>
               <th>DATE</th>
               <th>TOTAL</th>

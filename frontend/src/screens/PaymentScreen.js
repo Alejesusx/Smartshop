@@ -8,6 +8,7 @@ import ApplePayImg from '../assets/ApAy.png'
 import FormContainer from '../components/FormContainer'
 import { savePaymentMethod } from '../actions/cartActions'
 import CheckoutSteps from '../components/checkoutSteps'
+import Title from '../components/Title'
 
 const PaymentScreen = ({ history }) => {
   const shippingAddress = useSelector((state) => state.cart.shippingAddress)
@@ -30,9 +31,10 @@ const PaymentScreen = ({ history }) => {
 
   return (
     <>
+      <Title title='Select Payment Method' />
       <CheckoutSteps step1 step2 step3 />
       <FormContainer>
-        <h2>Payment Method</h2>
+        <h3>Payment Method</h3>
         <Form onSubmit={submitHandler}>
           <Form.Group controlId='address' className='my-3'>
             <Form.Label as='legend'>Select Method</Form.Label>
@@ -64,6 +66,7 @@ const PaymentScreen = ({ history }) => {
                   className='mb-2 text-success mt-3 '
                   type='radio'
                   label='Stripe'
+                  disabled
                   id='Stripe'
                   name='paymentMethod'
                   value='Stripe'
@@ -86,6 +89,7 @@ const PaymentScreen = ({ history }) => {
                   type='radio'
                   label='Apple Pay'
                   id='ApplePay'
+                  disabled
                   name='paymentMethod'
                   value='ApplePay'
                   onChange={(e) => setPaymentMethod(e.target.value)}
@@ -106,6 +110,7 @@ const PaymentScreen = ({ history }) => {
                   className='mb-2 text-success mt-3 '
                   type='radio'
                   label='Google Pay'
+                  disabled
                   id='GPay'
                   name='paymentMethod'
                   value='Gpay'

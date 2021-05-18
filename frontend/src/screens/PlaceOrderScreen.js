@@ -17,6 +17,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux'
 import CheckoutSteps from '../components/checkoutSteps'
 import Message from '../components/Message'
+import Title from '../components/Title'
 
 const PlaceOrderScreen = ({ history }) => {
   const dispatch = useDispatch()
@@ -85,6 +86,7 @@ const PlaceOrderScreen = ({ history }) => {
 
   return (
     <>
+      <Title title='Order Resume' />
       <CheckoutSteps step1 step2 step3 step4 />
 
       <Row>
@@ -133,7 +135,7 @@ const PlaceOrderScreen = ({ history }) => {
                           </Link>
                         </Col>
                         <Col md={4} className='text-info'>
-                          {item.qty} x ${item.price} =  ${item.price * item.qty} 
+                          {item.qty} x ${item.price} = ${item.price * item.qty}
                         </Col>
                       </Row>{' '}
                     </ListGroupItem>
@@ -147,18 +149,22 @@ const PlaceOrderScreen = ({ history }) => {
           <Card>
             <ListGroup variant='flush'>
               <ListGroupItem>
-                <h2>Order Summary </h2>
+                <h3>Order Summary </h3>
               </ListGroupItem>
               <ListGroupItem>
                 <Row>
                   <Col>Items:</Col>
-                  <Col className='text-info'>${addDecimals(cart.itemsPrice)}</Col>
+                  <Col className='text-info'>
+                    ${addDecimals(cart.itemsPrice)}
+                  </Col>
                 </Row>
               </ListGroupItem>
               <ListGroupItem>
                 <Row>
                   <Col>Shipping:</Col>
-                  <Col className='text-info'>${addDecimals(cart.shippingPrice)}</Col>
+                  <Col className='text-info'>
+                    ${addDecimals(cart.shippingPrice)}
+                  </Col>
                 </Row>
               </ListGroupItem>
               <ListGroupItem>
@@ -170,7 +176,9 @@ const PlaceOrderScreen = ({ history }) => {
               <ListGroupItem>
                 <Row>
                   <Col>Total:</Col>
-                  <Col className='text-info'>${addDecimals(cart.totalPrice)}</Col>
+                  <Col className='text-info'>
+                    ${addDecimals(cart.totalPrice)}
+                  </Col>
                 </Row>
               </ListGroupItem>
 
