@@ -145,7 +145,7 @@ const OrderScreen = ({ match, history }) => {
                   {order.deliveredAt.substring(11, 16)}
                 </Message>
               ) : (
-                <Message variant='danger'> Not deliveded</Message>
+                <Message variant='danger'> Not sent for delivery</Message>
               )}
             </ListGroupItem>
             <ListGroupItem>
