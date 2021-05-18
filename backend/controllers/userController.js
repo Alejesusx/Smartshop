@@ -138,12 +138,14 @@ const getUserProfile = asyncHandler(async (req, res) => {
 // Route: PUT /API/users/profile
 //type: private
 const updateUser = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.params.id)
+  const user = await User.findById(req.user._id)
 
   if (user) {
     user.name = req.body.name || user.name
     user.email = req.body.email || user.email
-    user.isAdmin = req.body.isAdmin
+    if (req.body.password) {
+      user.password = req.body.password
+    }
 
     const updatedUser = await user.save()
 
@@ -152,6 +154,7 @@ const updateUser = asyncHandler(async (req, res) => {
       name: updatedUser.name,
       email: updatedUser.email,
       isAdmin: updatedUser.isAdmin,
+      token: generateToken(updatedUser._id),
     })
   } else {
     res.status(404)
