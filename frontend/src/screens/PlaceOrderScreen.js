@@ -18,6 +18,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import CheckoutSteps from '../components/checkoutSteps'
 import Message from '../components/Message'
 import Title from '../components/Title'
+import { emptyCart } from '../actions/cartActions'
 
 const PlaceOrderScreen = ({ history }) => {
   const dispatch = useDispatch()
@@ -65,6 +66,7 @@ const PlaceOrderScreen = ({ history }) => {
   const { order, success, error } = orderCreate
   useEffect(() => {
     if (success) {
+      dispatch(emptyCart())
       history.push(`/order/${order._id}`)
     }
     //eslint-disable-next-line

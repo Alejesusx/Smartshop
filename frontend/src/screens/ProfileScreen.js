@@ -49,7 +49,7 @@ const ProfileScreen = ({ location, history }) => {
       setMessage('Passwords must match!')
     } else {
       let updateUser = {
-        id: user._id,
+        _id: user._id,
         name,
         email,
         password,
@@ -58,6 +58,7 @@ const ProfileScreen = ({ location, history }) => {
     }
   }
 
+
   return (
     <Row>
       <Title title={`${name} | Profile`} />
@@ -65,11 +66,9 @@ const ProfileScreen = ({ location, history }) => {
         <h4>User Profile</h4>
         {message && <Message variant='info'> {message}</Message>}
         {error && <Message variant='danger'> {error}</Message>}
-        {success && (
-          <Message variant='success'>
+        {success && (  <Message  variant='success'>
             Your info has been updated succesfully
-          </Message>
-        )}
+          </Message>)}
         {loading && <Loader />}
         <Form onSubmit={submitHandler}>
           <Form.Group controlId='name'>

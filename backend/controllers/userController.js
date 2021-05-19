@@ -149,7 +149,7 @@ const updateUser = asyncHandler(async (req, res) => {
 
     const updatedUser = await user.save()
 
-    res.json({
+    res.status(201).res.json({
       _id: updatedUser._id,
       name: updatedUser.name,
       email: updatedUser.email,

@@ -10,8 +10,8 @@ import SearchBox from './searchBox'
 const Header = () => {
   const dispatch = useDispatch()
 
-  const userLogin = useSelector((state) => state.userLogin)
-  const { userInfo } = userLogin
+  const userDetails = useSelector((state) => state.userDetails)
+  const { user } = userDetails
 
   const logoutHandler = () => {
     dispatch(userLogout())
@@ -53,8 +53,8 @@ const Header = () => {
                   Go to Cart
                 </Nav.Link>
               </LinkContainer>
-              {userInfo ? (
-                <NavDropdown title={userInfo.name} id='username'>
+              {user ? (
+                <NavDropdown title={user.name} id='username'>
                   <LinkContainer to='/profile'>
                     <NavDropdown.Item> Profile</NavDropdown.Item>
                   </LinkContainer>
@@ -72,7 +72,7 @@ const Header = () => {
                 </LinkContainer>
               )}
 
-              {userInfo && userInfo.isAdmin && (
+              {user && user.isAdmin && (
                 <NavDropdown title='Admin' id='adminmenu'>
                   <LinkContainer to='/admin/userlist'>
                     <NavDropdown.Item>Users</NavDropdown.Item>

@@ -34,11 +34,8 @@ export const removeFromCart = (id) => (dispatch, getState) => {
   localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems))
 }
 
-export const emptyCart = (id) => (dispatch, getState) => {
-  dispatch({
-    type: CART_EMPTY,
-    payload: id,
-  })
+export const emptyCart = () => (dispatch, getState) => {
+  dispatch({ type: CART_EMPTY })
   localStorage.removeItem('cartItems')
 }
 
